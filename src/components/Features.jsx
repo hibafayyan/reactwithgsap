@@ -1,3 +1,4 @@
+
 import {
   FaBolt,
   FaShieldAlt,
@@ -5,6 +6,12 @@ import {
   FaPalette,
 } from "react-icons/fa";
 
+import { useRef } from "react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 const features = [
   {
@@ -38,61 +45,96 @@ const features = [
 ];
 
 function Features() {
- return(
-   <section 
-     id="about"
-   className="min-h-screen bg-white py-28 md:py-36">
-  <div className="container mx-auto grid grid-cols-1 items-center gap-12 px-6 md:grid-cols-2">
+  const sectionRef = useRef(null);
 
-    {/* Left Content */}
-    <div>
-      <p className="mb-3 font-semibold uppercase tracking-widest text-blue-600">
-        About Us
-      </p>
 
-      <h2 className="text-3xl font-bold leading-tight text-gray-900 md:text-4xl">
-        Save Your Time and Enjoy a Better Experience
-      </h2>
+useGSAP(() => {
+  const section = sectionRef.current;
+  const content = section.querySelector(".about-content");
+  const cards = section.querySelectorAll(".feature-card");
 
-      <p className="mt-5 leading-7 text-gray-600">
-        Discover a smarter and simpler way to manage your daily tasks
-        with a modern, intuitive and easy-to-use experience.
-      </p>
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: section,
+      start: "top 75%",
+      toggleActions: "restart none restart none",
+    },
+  });
 
-      <button className="mt-6 rounded-full bg-blue-600 px-6 py-3 font-medium text-white transition hover:bg-blue-700">
-        Read More
-      </button>
-    </div>
+  // Left content aur pehle 2 cards saath animate honge
+  tl.from(content, {
+    x: -70,
+    autoAlpha: 0,
+    duration: 1,
+    ease: "power2.out",
+  }, 0);
 
-    {/* Right Feature Cards */}
-    <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-      {features.map((feature) => {
-        const Icon = feature.icon;
+  tl.from(cards, {
+    opacity:0,
+    y:-55,
+    autoAlpha: 0,
+    duration: 1.5,
+    stagger: 0.15,
+    ease: "power2.out",
+  }, 0);
 
-        return (
-          <div
-            key={feature.id}
-            className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-lg"
-          >
-            <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-xl bg-blue-50">
-              <Icon className="text-2xl text-blue-600" />
-            </div>
+}, { scope: sectionRef });
+  return (
+    <section
+      ref={sectionRef}
+      id="about"
+      className="min-h-screen bg-white py-28 md:py-36"
+    >
+      <div className="container mx-auto grid grid-cols-1 items-center gap-12 px-6 md:grid-cols-2">
 
-            <h3 className="text-lg font-semibold text-gray-900">
-              {feature.title}
-            </h3>
+        {/* Left Content */}
+        <div className="about-content">
+          <p className="mb-3 font-semibold uppercase tracking-widest text-blue-600">
+            About Us
+          </p>
 
-            <p className="mt-3 text-sm leading-6 text-gray-600">
-              {feature.description}
-            </p>
-          </div>
-        );
-      })}
-    </div>
+          <h2 className="text-3xl font-bold leading-tight md:text-4xl text-mist-600">
+            Save Your Time and Enjoy a Better Experience
+          </h2>
 
-  </div>
-</section>
- )
+          <p className="mt-5 leading-7 text-gray-600">
+            Discover a smarter and simpler way to manage your daily tasks
+            with a modern, intuitive and easy-to-use experience.
+          </p>
+
+          <button className="mt-6 rounded-full bg-blue-600 px-6 py-3 font-medium text-white transition hover:bg-blue-700">
+            Read More
+          </button>
+        </div>
+
+        {/* Right Feature Cards */}
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+          {features.map((feature) => {
+            const Icon = feature.icon;
+
+            return (
+              <div
+                key={feature.id}
+                className="feature-card rounded-2xl border border-gray-100 bg-white p-6 shadow-sm transition-shadow duration-300 hover:shadow-lg">
+                <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-xl bg-blue-50">
+                  <Icon className="text-2xl text-blue-600" />
+                </div>
+
+                <h3 className="text-lg font-semibold text-gray-900">
+                  {feature.title}
+                </h3>
+
+                <p className="mt-3 text-sm leading-6 text-gray-600">
+                  {feature.description}
+                </p>
+              </div>
+            );
+          })}
+        </div>
+
+      </div>
+    </section>
+  );
 }
 
 export default Features;

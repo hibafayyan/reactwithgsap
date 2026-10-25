@@ -24,7 +24,7 @@ useGSAP(() => {
   tl.from(leftRef.current, {
     x: -100,
     opacity: 0,
-    duration: 1.3,
+    duration: 2.1,
     ease: "power3.out",
   });
 
@@ -34,7 +34,7 @@ useGSAP(() => {
       z: -300,
       scale: 1.7,
       opacity: 0,
-      duration: 1.3,
+      duration: 2.1,
       ease: "power3.out",
     },
     "<"
@@ -48,7 +48,7 @@ useGSAP(() => {
 
 
   return (
-    <section className="min-h-screen bg-gradient-to-br from-blue-900 to-blue-500 pt-28">
+    <section className="min-h-screen bg-gradient-to-br from-blue-900 to-blue-500 pt-28 p-8">
       <div className="container mx-auto flex flex-col items-center justify-between gap-10 px-6 md:flex-row">
         {/* Left div */}
         <div  ref={leftRef} className="w-1/2 text-white ">

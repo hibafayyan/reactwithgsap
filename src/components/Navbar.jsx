@@ -17,10 +17,10 @@ function Navbar() {
 
 
  useGSAP(() => {
-  gsap.from([".nav-link", ".dropdown-link"], {
+  gsap.from(".nav-link",  {
     x: 25,
     opacity: 0,
-    duration: 1,
+    duration: 0.7,
     stagger: 0.3,
   });
 }, []);
@@ -30,7 +30,7 @@ function Navbar() {
       className="fixed top-0 z-50 w-full border-b border-blue-700 bg-blue-800 px-4 py-3"
     >
       <NavbarBrand href="#home">
-        <span className="text-4xl font-semibold text-white">
+        <span className="text-4xl font-semibold text-white border-0 outline-0">
           SoftLand
         </span>
       </NavbarBrand>
@@ -78,7 +78,7 @@ function Navbar() {
 
       <Dropdown
   label={
-    <span className="text-white hover:text-gray-300">
+    <span className="text-white hover:text-gray-300 ">
       Drop Down
     </span>
   }
